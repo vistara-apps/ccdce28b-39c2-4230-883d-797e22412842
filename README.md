@@ -1,104 +1,106 @@
 # DeFi Agent Hub
 
-A Base Mini App for orchestrating cross-chain DeFi strategies across Base and Solana, with verifiable agent reputation and social primitives.
+A Base Mini App for orchestrating cross-chain DeFi strategies across Base and Solana, with verifiable agent reputation built on Farcaster.
 
 ## Features
 
-- 🤖 **DeFi Agents**: Follow top-performing strategists with verifiable on-chain track records
-- ⚡ **Cross-Chain Strategies**: Execute DeFi strategies across Base and Solana
-- 🌉 **Asset Bridging**: Seamlessly move assets between chains with gas sponsorship
-- 🔔 **Social Notifications**: Real-time alerts for agent actions and performance milestones
-- 💎 **Gas Sponsorship**: All Base transactions are gas-sponsored via Paymaster
+- 🤖 **Top DeFi Agents** - Follow and track performance of expert strategists
+- 📊 **Cross-Chain Strategies** - Execute DeFi strategies across Base + Solana
+- 🌉 **Asset Bridging** - Seamless cross-chain asset transfers
+- ⚡ **Gas-Sponsored Transactions** - All Base transactions are gasless
+- 🔔 **Social Notifications** - Real-time alerts via Farcaster
+- 🎯 **Verifiable Reputation** - On-chain track records with Basenames
 
 ## Tech Stack
 
 - **Framework**: Next.js 15 (App Router)
-- **React**: 19
-- **Blockchain**: Base (L2), Solana
-- **OnchainKit**: Wallet, Identity, Transaction components
-- **MiniKit**: Farcaster Mini App integration
-- **Styling**: Tailwind CSS with Coinbase theme
+- **Blockchain**: Base (L2) + Solana
+- **UI**: React 19, Tailwind CSS, Lucide Icons
+- **Web3**: OnchainKit, Wagmi, Viem
+- **Social**: Farcaster Mini App SDK
 
 ## Getting Started
 
-1. **Install dependencies**:
+1. Install dependencies:
 ```bash
 npm install
 ```
 
-2. **Set up environment variables**:
+2. Set up environment variables:
 ```bash
 cp .env.local.example .env.local
-# Edit .env.local with your API keys
+# Add your OnchainKit API key and other credentials
 ```
 
-3. **Run development server**:
+3. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. **Open in browser**:
-Navigate to [http://localhost:3000](http://localhost:3000)
+4. Open [http://localhost:3000](http://localhost:3000)
 
 ## Project Structure
 
 ```
 app/
-├── components/          # Reusable UI components
+├── components/          # React components
 │   ├── Providers.tsx   # OnchainKit & Query providers
-│   ├── Header.tsx      # App header with wallet
-│   ├── Navigation.tsx  # Bottom navigation
-│   ├── AgentCard.tsx   # Agent display component
-│   └── StrategyCard.tsx # Strategy display component
-├── agents/             # Agents browsing page
-├── strategies/         # Strategies page
-├── bridge/             # Cross-chain bridge
-├── notifications/      # Notifications page
-└── layout.tsx          # Root layout
-
-lib/
-├── types.ts            # TypeScript interfaces
-└── mock-data.ts        # Mock data for development
+│   ├── ConnectWallet.tsx
+│   ├── AgentCard.tsx
+│   ├── StrategyCard.tsx
+│   └── StatsCard.tsx
+├── layout.tsx          # Root layout
+├── page.tsx            # Home page
+└── globals.css         # Global styles
 
 public/
 └── .well-known/
     └── farcaster.json  # Mini App manifest
 ```
 
-## Key Features Implementation
+## Key Integrations
 
-### Gas Sponsorship
-All Base transactions use the configured Paymaster for gas sponsorship, making DeFi accessible without gas fees.
+### OnchainKit
+- Wallet connection and management
+- Identity resolution (Basenames)
+- Transaction components with gas sponsorship
+- Swap functionality for cross-chain operations
 
-### Cross-Chain Integration
-- Base: OnchainKit components for wallet, transactions, identity
-- Solana: Backend proxy for secure transaction handling
-- Bridge: Wormhole/LayerZero integration for asset transfers
+### Farcaster Mini App SDK
+- User context and FID access
+- Push notifications
+- Frame composition and sharing
+- Social primitives
 
-### Social Primitives
-- Follow agents and strategies
-- Real-time notifications via Farcaster
-- Share successful executions as Frames
-- Verifiable on-chain reputation
+### Base Network
+- Gas-sponsored transactions via Paymaster
+- Smart contract interactions
+- Cross-chain bridging
 
-## Environment Variables
+## Design System
 
-- `NEXT_PUBLIC_ONCHAINKIT_API_KEY`: OnchainKit API key from Coinbase Developer Platform
-- `NEXT_PUBLIC_BASE_RPC_URL`: Base mainnet RPC endpoint
-- `NEXT_PUBLIC_PAYMASTER_URL`: Paymaster URL for gas sponsorship
+**Theme**: Coinbase (Dark Navy)
+- Background: `#0a1929`
+- Accent: `#0052ff` (Coinbase Blue)
+- Surface: `#132f4c`
+- Border: `rgba(0, 82, 255, 0.2)`
+
+**Components**:
+- Glass-effect cards with backdrop blur
+- Smooth transitions (200-300ms)
+- Rounded corners (6-16px)
+- Glow effects on interactive elements
 
 ## Deployment
 
-1. Build the application:
+1. Build the app:
 ```bash
 npm run build
 ```
 
-2. Deploy to your hosting platform (Vercel recommended)
-
-3. Configure environment variables in your hosting platform
-
-4. Ensure `.well-known/farcaster.json` is accessible at your domain
+2. Deploy to Vercel or your preferred hosting
+3. Configure the Farcaster manifest at `/.well-known/farcaster.json`
+4. Set up webhook endpoint for notifications
 
 ## License
 
