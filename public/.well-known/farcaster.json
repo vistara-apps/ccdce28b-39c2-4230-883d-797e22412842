@@ -7,10 +7,10 @@
   "frame": {
     "version": "next",
     "name": "DeFi Agent Hub",
-    "homeUrl": "https://defigent.hub/home",
+    "homeUrl": "https://app-22412842-coxr.vercel.app",
     "iconUrl": "https://defigent.hub/icon.png",
     "splashImageUrl": "https://defigent.hub/splash.png",
     "splashBackgroundColor": "#0A0A0E",
-    "webhookUrl": "https://defigent.hub/api/farcaster/webhook"
+    "webhookUrl": "https://app-22412842-coxr.vercel.app/api/webhook"
   }
 }
