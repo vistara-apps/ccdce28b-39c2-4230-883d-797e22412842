@@ -90,7 +90,7 @@ export default function StrategiesPage() {
             className="animate-slide-up"
             style={{ animationDelay: `${0.1 + index * 0.05}s` }}
           >
-            <StrategyCard strategy={strategy} onExecute={handleExecute} variant="actionable" />
+            <StrategyCard strategy={strategy} onExecute={handleExecute} variant="detailed" />
           </div>
         ))}
       </div>

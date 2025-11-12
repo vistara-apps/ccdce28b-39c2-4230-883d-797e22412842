@@ -1,52 +1,55 @@
 'use client';
 
 import { Star, Users, TrendingUp } from 'lucide-react';
+import type { DeFiAgent } from '@/lib/types';
 
 interface AgentCardProps {
-  name: string;
-  basename: string;
-  avatar: string;
-  performance: string;
-  followers: number;
-  strategies: number;
-  rating: number;
+  agent: DeFiAgent;
+  onFollow?: (fid: number) => void;
+  variant?: 'default' | 'detailed';
 }
 
 export function AgentCard({
-  name,
-  basename,
-  avatar,
-  performance,
-  followers,
-  strategies,
-  rating,
+  agent,
+  onFollow,
+  variant = 'default',
 }: AgentCardProps) {
+  const {
+    displayName: name,
+    basename,
+    pfpUrl: avatar,
+    performanceMetrics,
+    followers,
+    rating,
+  } = agent;
   return (
     <div className="glass-effect rounded-theme-lg p-6 hover:shadow-lg transition-all duration-300 cursor-pointer group">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-blue-400 flex items-center justify-center text-2xl">
-            {avatar}
-          </div>
+          <img 
+            src={avatar} 
+            alt={name}
+            className="w-12 h-12 rounded-full object-cover"
+          />
           <div>
             <h3 className="font-bold text-lg group-hover:text-accent transition-colors duration-200">
               {name}
             </h3>
-            <p className="text-sm text-fg/60">{basename}</p>
+            <p className="text-sm text-fg/60">{basename || '@agent'}</p>
           </div>
         </div>
         <div className="flex items-center gap-1 text-warning">
           <Star className="w-4 h-4 fill-current" />
-          <span className="text-sm font-medium">{rating}</span>
+          <span className="text-sm font-medium">{rating.toFixed(1)}</span>
         </div>
       </div>
 
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <TrendingUp className="w-4 h-4 text-success" />
-          <span className="text-success font-bold">{performance}</span>
+          <span className="text-success font-bold">+{performanceMetrics.totalReturn.toFixed(1)}%</span>
         </div>
-        <span className="text-xs text-fg/60">30d performance</span>
+        <span className="text-xs text-fg/60">Total Return</span>
       </div>
 
       <div className="flex items-center justify-between pt-4 border-t border-border">
@@ -55,12 +58,15 @@ export function AgentCard({
           <span className="text-sm">{followers.toLocaleString()}</span>
         </div>
         <div className="text-sm text-fg/70">
-          {strategies} strategies
+          {performanceMetrics.strategiesCreated} strategies
         </div>
       </div>
 
-      <button className="w-full mt-4 py-2 bg-accent/10 hover:bg-accent hover:text-white text-accent rounded-theme-md font-medium transition-all duration-200">
-        Follow Agent
+      <button 
+        onClick={() => onFollow?.(agent.fid)}
+        className="w-full mt-4 py-2 bg-accent/10 hover:bg-accent hover:text-white text-accent rounded-theme-md font-medium transition-all duration-200"
+      >
+        {agent.isFollowing ? 'Following' : 'Follow Agent'}
       </button>
     </div>
   );

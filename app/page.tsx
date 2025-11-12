@@ -7,6 +7,7 @@ import { ConnectWallet } from './components/ConnectWallet';
 import { AgentCard } from './components/AgentCard';
 import { StrategyCard } from './components/StrategyCard';
 import { StatsCard } from './components/StatsCard';
+import { mockAgents, mockStrategies } from '@/lib/mock-data';
 
 export default function Home() {
   const [isReady, setIsReady] = useState(false);
@@ -90,33 +91,9 @@ export default function Home() {
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <AgentCard
-              name="AlphaSeeker"
-              basename="alphaseeker.base.eth"
-              avatar="🤖"
-              performance="+24.3%"
-              followers={1247}
-              strategies={8}
-              rating={4.8}
-            />
-            <AgentCard
-              name="YieldMaster"
-              basename="yieldmaster.base.eth"
-              avatar="⚡"
-              performance="+19.7%"
-              followers={892}
-              strategies={12}
-              rating={4.6}
-            />
-            <AgentCard
-              name="CrossChainPro"
-              basename="crosschain.base.eth"
-              avatar="🌉"
-              performance="+16.2%"
-              followers={654}
-              strategies={6}
-              rating={4.7}
-            />
+            {mockAgents.slice(0, 3).map((agent) => (
+              <AgentCard key={agent.fid} agent={agent} />
+            ))}
           </div>
         </div>
       </section>
@@ -131,42 +108,9 @@ export default function Home() {
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <StrategyCard
-              name="Base-Solana Arbitrage"
-              description="Automated arbitrage between Base and Solana DEXs"
-              apy="22.4%"
-              tvl="$340K"
-              risk="Medium"
-              chains={['Base', 'Solana']}
-              creator="AlphaSeeker"
-            />
-            <StrategyCard
-              name="Dual-Chain Yield Farm"
-              description="Optimized yield farming across both networks"
-              apy="18.9%"
-              tvl="$520K"
-              risk="Low"
-              chains={['Base', 'Solana']}
-              creator="YieldMaster"
-            />
-            <StrategyCard
-              name="Cross-Chain Liquidity"
-              description="Provide liquidity on both chains simultaneously"
-              apy="15.3%"
-              tvl="$280K"
-              risk="Low"
-              chains={['Base', 'Solana']}
-              creator="CrossChainPro"
-            />
-            <StrategyCard
-              name="Smart Rebalancing"
-              description="AI-powered portfolio rebalancing across chains"
-              apy="20.1%"
-              tvl="$410K"
-              risk="Medium"
-              chains={['Base', 'Solana']}
-              creator="AlphaSeeker"
-            />
+            {mockStrategies.slice(0, 4).map((strategy) => (
+              <StrategyCard key={strategy.strategyID} strategy={strategy} />
+            ))}
           </div>
         </div>
       </section>

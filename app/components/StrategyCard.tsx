@@ -1,31 +1,38 @@
 'use client';
 
 import { TrendingUp, Shield, DollarSign } from 'lucide-react';
+import type { Strategy } from '@/lib/types';
 
 interface StrategyCardProps {
-  name: string;
-  description: string;
-  apy: string;
-  tvl: string;
-  risk: string;
-  chains: string[];
-  creator: string;
+  strategy: Strategy;
+  onExecute?: (strategyId: string) => void;
+  variant?: 'default' | 'detailed';
 }
 
 export function StrategyCard({
-  name,
-  description,
-  apy,
-  tvl,
-  risk,
-  chains,
-  creator,
+  strategy,
+  onExecute,
+  variant = 'default',
 }: StrategyCardProps) {
-  const riskColor = {
-    Low: 'text-success',
-    Medium: 'text-warning',
-    High: 'text-error',
-  }[risk] || 'text-fg/60';
+  const {
+    strategyID,
+    name,
+    description,
+    currentAPY,
+    tvl,
+    riskScore,
+    targetChain,
+    creatorName,
+  } = strategy;
+
+  const getRiskLevel = (score: number) => {
+    if (score <= 2) return { level: 'Low', color: 'text-success' };
+    if (score <= 3) return { level: 'Medium', color: 'text-warning' };
+    return { level: 'High', color: 'text-error' };
+  };
+
+  const risk = getRiskLevel(riskScore);
+  const chains = targetChain === 'Both' ? ['Base', 'Solana'] : [targetChain];
 
   return (
     <div className="glass-effect rounded-theme-lg p-6 hover:shadow-lg transition-all duration-300 cursor-pointer group">
@@ -53,27 +60,30 @@ export function StrategyCard({
             <TrendingUp className="w-3 h-3" />
             <span className="text-xs">APY</span>
           </div>
-          <p className="font-bold text-success">{apy}</p>
+          <p className="font-bold text-success">{currentAPY.toFixed(1)}%</p>
         </div>
         <div>
           <div className="flex items-center gap-1 text-fg/60 mb-1">
             <DollarSign className="w-3 h-3" />
             <span className="text-xs">TVL</span>
           </div>
-          <p className="font-bold">{tvl}</p>
+          <p className="font-bold">${(tvl / 1000000).toFixed(1)}M</p>
         </div>
         <div>
           <div className="flex items-center gap-1 text-fg/60 mb-1">
             <Shield className="w-3 h-3" />
             <span className="text-xs">Risk</span>
           </div>
-          <p className={`font-bold ${riskColor}`}>{risk}</p>
+          <p className={`font-bold ${risk.color}`}>{risk.level}</p>
         </div>
       </div>
 
       <div className="flex items-center justify-between pt-4 border-t border-border">
-        <span className="text-sm text-fg/60">by {creator}</span>
-        <button className="px-4 py-2 bg-accent hover:bg-accent/90 text-white rounded-theme-md font-medium transition-all duration-200 text-sm">
+        <span className="text-sm text-fg/60">by {creatorName}</span>
+        <button 
+          onClick={() => onExecute?.(strategyID)}
+          className="px-4 py-2 bg-accent hover:bg-accent/90 text-white rounded-theme-md font-medium transition-all duration-200 text-sm"
+        >
           Execute
         </button>
       </div>
